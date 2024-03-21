@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QPushButton, QWidget, QLabel
-from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtCore import Qt, QPoint, pyqtSignal
 from PyQt5.QtGui import QPainter, QPen, QFont
-from utils.helperFunctions import hasse_parser
+from utils.helper_functions import hasseParser
 from database import crud
 
 
@@ -39,10 +39,12 @@ class GraphArea(QWidget):
         self.node_positions = {}
         self.adjacency_list, self.start_node, self.end_node = {}, '', ''
         self.selected_nodes: list[GraphNode] = []
+        self.get_variant()
 
-    def getVariant(self) -> (dict[str, list[list, list]], str, str):
+    def get_variant(self) -> (dict[str, list[list, list]], str, str):
         variant = crud.get_random_variant()
-        self.adjacency_list = hasse_parser(variant.connections)
+        self.adjacency_list = hasseParser(variant.connections)
+
         self.start_node = variant.start
         self.end_node = variant.end
 
@@ -75,6 +77,8 @@ class GraphArea(QWidget):
 
 
 class GraphWindow(QWidget):
+    saveSignal = pyqtSignal(str)
+
     def __init__(self):
         super().__init__()
         self.setGeometry(100, 100, 600, 700)
@@ -100,13 +104,13 @@ class GraphWindow(QWidget):
         self.info_label.setFont(QFont("Century Gothic", 16))
         self.info_label.setAlignment(Qt.AlignCenter)
 
-        reset_button = QPushButton("Reset", self)
-        reset_button.setGeometry(50, 620, 100, 30)
+        reset_button = QPushButton("Сбросить", self)
+        reset_button.setGeometry(50, 620, 150, 40)
         reset_button.clicked.connect(self.reset_graph)
 
         # Add "Save" button
-        save_button = QPushButton("Save", self)
-        save_button.setGeometry(450, 620, 100, 30)
+        save_button = QPushButton("Сохранить", self)
+        save_button.setGeometry(400, 620, 150, 40)
         save_button.clicked.connect(self.save_graph)
 
     def reset_graph(self):
@@ -117,5 +121,11 @@ class GraphWindow(QWidget):
 
     def save_graph(self):
         selected_node_names = [node.name for node in self.graph_area.selected_nodes]
-        print("Selected Nodes:", selected_node_names)
+        if selected_node_names:
+            self.saveSignal.emit(', '.join(selected_node_names))
+        else:
+            self.saveSignal.emit('∅')
+
+        self.close()
+        self.reset_graph()
 

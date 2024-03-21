@@ -1,10 +1,10 @@
 import json
 
 
-def hasse_parser(diag: dict) -> dict[str, list[list, list]]:
+def hasseParser(diag: dict) -> dict[str, list[list, list]]:
     graph = {}
 
-    for node, connections in diag['data'].items():
+    for node, connections in diag.items():
         for down in connections["downs"]:
             if graph.get(node, False) is False:
                 graph[node] = []
