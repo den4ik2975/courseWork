@@ -31,8 +31,8 @@ color: white;
      <rect>
       <x>20</x>
       <y>20</y>
-      <width>661</width>
-      <height>661</height>
+      <width>660</width>
+      <height>660</height>
      </rect>
     </property>
     <property name="autoFillBackground">

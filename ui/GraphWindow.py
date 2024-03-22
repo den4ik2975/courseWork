@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QPushButton, QWidget, QLabel
 from PyQt5.QtCore import Qt, QPoint, pyqtSignal
 from PyQt5.QtGui import QPainter, QPen, QFont
-from utils.helper_functions import hasseParser
+from utils.helper_functions import hasse_parser
 from database import crud
 
 
@@ -34,23 +34,18 @@ class GraphNode(QPushButton):
 
 
 class GraphArea(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, variant, parent=None):
         super(GraphArea, self).__init__(parent)
         self.node_positions = {}
         self.adjacency_list, self.start_node, self.end_node = {}, '', ''
         self.selected_nodes: list[GraphNode] = []
-        self.get_variant()
-
-    def get_variant(self) -> (dict[str, list[list, list]], str, str):
-        variant = crud.get_random_variant()
-        self.adjacency_list = hasseParser(variant.connections)
-
+        self.adjacency_list = hasse_parser(variant.connections)
         self.start_node = variant.start
         self.end_node = variant.end
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setPen(QPen(Qt.black, 2))
+        painter.setPen(QPen(Qt.black, 3))
         for start_node, connected_nodes in self.adjacency_list.items():
             if start_node in self.node_positions:
                 start_pos = self.node_positions[start_node]
@@ -79,15 +74,16 @@ class GraphArea(QWidget):
 class GraphWindow(QWidget):
     saveSignal = pyqtSignal(str)
 
-    def __init__(self):
+    def __init__(self, variant):
         super().__init__()
         self.setGeometry(100, 100, 600, 700)
         self.selected_nodes = []
+        self.variant = variant
         self.initUI()
 
     def initUI(self):
         self.setWindowTitle("Graph Visualization")
-        self.graph_area = GraphArea(self)
+        self.graph_area = GraphArea(self.variant, self)
         self.graph_area.setGeometry(50, 50, 500, 500)
         self.graph_area.setStyleSheet("background-color: white;")
 

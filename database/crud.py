@@ -17,13 +17,13 @@ def get_random_variant() -> Variant:
         return variant
 
 
-def add_new_variant(data: dict, ans: dict) -> None:  # DEV!!!
+def add_new_variant(connections, start, end, answers) -> None:  # DEV!!!
     with session:
         var = Variant(
-            connections=data['data'],
-            start=data['start'],
-            end=data['end'],
-            answers=ans
+            connections=connections,
+            start=start,
+            end=end,
+            answers=answers
         )
 
         session.add(var)

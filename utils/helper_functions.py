@@ -1,7 +1,7 @@
 import json
 
 
-def hasseParser(diag: dict) -> dict[str, list[list, list]]:
+def hasse_parser(diag: dict) -> dict[str, list[list, list]]:
     graph = {}
 
     for node, connections in diag.items():
@@ -16,3 +16,12 @@ def hasseParser(diag: dict) -> dict[str, list[list, list]]:
             graph[node].append(up)
 
     return graph
+
+
+def answers_parser(answer, action):
+
+    if action in ['maxes', 'mins', 'largest', 'smallest']:
+        return set(answer[action])
+
+    elif action in ['order', 'revorder']:
+        return [set(i) for i in answer[action].split('|')]
