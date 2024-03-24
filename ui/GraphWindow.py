@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QPushButton, QWidget, QLabel
+from PyQt5.QtWidgets import QPushButton, QWidget, QLabel, QDialog
 from PyQt5.QtCore import Qt, QPoint, pyqtSignal
 from PyQt5.QtGui import QPainter, QPen, QFont
 from utils.helper_functions import hasse_parser
@@ -71,7 +71,7 @@ class GraphArea(QWidget):
             self.parent().info_label.setText(selected_text if selected_text else "∅")
 
 
-class GraphWindow(QWidget):
+class GraphWindow(QDialog):
     saveSignal = pyqtSignal(str)
 
     def __init__(self, variant):
@@ -79,6 +79,7 @@ class GraphWindow(QWidget):
         self.setGeometry(100, 100, 600, 700)
         self.selected_nodes = []
         self.variant = variant
+        self.action = ''
         self.initUI()
 
     def initUI(self):
@@ -104,10 +105,11 @@ class GraphWindow(QWidget):
         reset_button.setGeometry(50, 620, 150, 40)
         reset_button.clicked.connect(self.reset_graph)
 
-        # Add "Save" button
         save_button = QPushButton("Сохранить", self)
         save_button.setGeometry(400, 620, 150, 40)
         save_button.clicked.connect(self.save_graph)
+
+        self.task_label = QLabel("", self)
 
     def reset_graph(self):
         for node in self.graph_area.selected_nodes:

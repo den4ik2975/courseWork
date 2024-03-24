@@ -25,3 +25,19 @@ def answers_parser(answer, action):
 
     elif action in ['order', 'revorder']:
         return [set(i) for i in answer[action].split('|')]
+
+
+def humanizer(act):
+    match act:
+        case 'maxes':
+            return 'Выберите максимальные элементы'
+        case 'maxes':
+            return 'Выберите максимальные элементы'
+        case 'maxes':
+            return 'Выберите максимальные элементы'
+        case 'maxes':
+            return 'Выберите максимальные элементы'
+        case 'maxes':
+            return 'Выберите максимальные элементы'
+        case 'maxes':
+            return 'Выберите максимальные элементы'

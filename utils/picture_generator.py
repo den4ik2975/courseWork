@@ -30,6 +30,7 @@ class ImageGenerator:
         return positions
 
     def generate_image(self):
+        print(self.adjacency_list)
         font = ImageFont.truetype(self.font_path, self.font_size)
 
         img = Image.new('RGB', self.img_size, '#ebebeb')
@@ -45,7 +46,6 @@ class ImageGenerator:
                     draw.line([node_pos, connection_pos], fill='black', width=3)
 
 
-        # Draw nodes and names
         for i, pos in enumerate(self.positions):
             top_left = (pos[0] - self.node_radius, pos[1] - self.node_radius)
             bottom_right = (pos[0] + self.node_radius, pos[1] + self.node_radius)
@@ -61,23 +61,4 @@ class ImageGenerator:
             text_pos = (pos[0] - dx / 2, pos[1] - dy / 1.4)
             draw.text(text_pos, self.names[i], fill='black', font=font)
 
-        # Draw connections
-
-        # Save the image
-        img.show()
-
-# Example usage:
-adjacency_list = {
-    'A': ['B', 'C'],
-    'B': ['C', 'D'],
-    'C': ['E'],
-    'D': [],
-    'E': ['F', 'G'],
-    'F': ['H'],
-    'G': ['I'],
-    'H': [],
-    'I': []
-}
-
-generator = ImageGenerator(adjacency_list, start='A', end='I')
-generator.generate_image()
+        return img
