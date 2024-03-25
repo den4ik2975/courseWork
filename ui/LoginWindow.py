@@ -25,7 +25,9 @@ class LoginWindow(QMainWindow):
 
         self.success_window.exitSignal.connect(self.exit_handler)
         self.failure_window.exitSignal.connect(self.exit_handler)
+        self.failure_window.retrySignal.connect(self.retry_handler)
         self.main_window.failureSignal.connect(self.failure_handler)
+        self.main_window.successSignal.connect(self.success_handler)
 
     def start_handler(self):
         self.fio = self.fioLine.text()
@@ -46,18 +48,33 @@ class LoginWindow(QMainWindow):
         delta = end_time - self.start_time
 
         stringified_end = end_time.strftime('%m.%d %H:%M:%S')
-        stringified_delta = delta.strftime('%H.%M.%S')
+        stringified_delta = str(delta)
 
         self.success_window.fioLabel.setText(self.fio)
         self.success_window.groupLabel.setText(self.group)
         self.success_window.endLabel.setText(stringified_end)
         self.success_window.timeLabel.setText(stringified_delta)
 
+        self.success_window.exec()
+
     @pyqtSlot(str)
     def exit_handler(self, data):
         self.main_window.close()
         self.success_window.close()
         self.failure_window.close()
+
+    @pyqtSlot(str)
+    def retry_handler(self):
+        self.main_window.close()
+        self.success_window.close()
+        self.failure_window.close()
+
+        self.main_window = MainWindow()
+        uic.loadUi("ui/LoginWindow.ui", self)
+        self.main_window.failureSignal.connect(self.failure_handler)
+        self.main_window.successSignal.connect(self.success_handler)
+
+        self.main_window.show()
 
 
 

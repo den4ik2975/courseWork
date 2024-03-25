@@ -182,55 +182,6 @@ QPushButton:hover {
      <string>Наибольший</string>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit_2">
-    <property name="geometry">
-     <rect>
-      <x>705</x>
-      <y>99</y>
-      <width>400</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Century Gothic</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: #0b392c;
-border-radius: 10px;
-background-color: #f6f8f7;
-padding-left: 10px;
-padding-top: 10px;</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <property name="lineWidth">
-     <number>1</number>
-    </property>
-    <property name="midLineWidth">
-     <number>1</number>
-    </property>
-    <property name="lineWrapMode">
-     <enum>QPlainTextEdit::WidgetWidth</enum>
-    </property>
-    <property name="cursorWidth">
-     <number>2</number>
-    </property>
-    <property name="backgroundVisible">
-     <bool>false</bool>
-    </property>
-    <property name="placeholderText">
-     <string notr="true">Введите пары элементов...</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="maxes">
     <property name="geometry">
      <rect>
@@ -601,6 +552,74 @@ border-radius: 6px;
      <rect>
       <x>910</x>
       <y>450</y>
+      <width>190</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Century Gothic</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #f6f8f7;
+color: #0b392c;
+padding-left: 10px;
+border-radius: 6px;
+</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::PlainText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <property name="indent">
+     <number>-1</number>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pairButton">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>99</y>
+      <width>190</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Century Gothic</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-color: #F5ECE2;
+	color: #0b392c;
+	border-radius: 6px;
+	border: 2px solid #bb8a52;
+}
+
+QPushButton:hover {
+	background-color: #bb8a52;
+	color: white;
+}</string>
+    </property>
+    <property name="text">
+     <string>Пары</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="pair">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>99</y>
       <width>190</width>
       <height>40</height>
      </rect>

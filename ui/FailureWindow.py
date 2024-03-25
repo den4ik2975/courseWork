@@ -5,6 +5,7 @@ from PyQt5.QtCore import pyqtSlot, pyqtSignal
 
 class FailureWindow(QDialog):
     exitSignal = pyqtSignal(str)
+    retrySignal = pyqtSignal(str)
 
     def __init__(self):
         super().__init__()
@@ -16,4 +17,4 @@ class FailureWindow(QDialog):
         self.exitSignal.emit('O')
 
     def retry_handler(self):
-        pass
+        self.retrySignal.emit('')

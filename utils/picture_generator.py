@@ -30,7 +30,6 @@ class ImageGenerator:
         return positions
 
     def generate_image(self):
-        print(self.adjacency_list)
         font = ImageFont.truetype(self.font_path, self.font_size)
 
         img = Image.new('RGB', self.img_size, '#ebebeb')

@@ -1,4 +1,6 @@
-from PyQt5.QtWidgets import QPushButton, QWidget, QLabel, QDialog
+import time
+
+from PyQt5.QtWidgets import QPushButton, QWidget, QLabel, QDialog, QPlainTextEdit
 from PyQt5.QtCore import Qt, QPoint, pyqtSignal
 from PyQt5.QtGui import QPainter, QPen, QFont
 from utils.helper_functions import hasse_parser, humanizer
@@ -58,21 +60,34 @@ class GraphArea(QWidget):
     def node_clicked(self, button):
         if button not in self.selected_nodes:
             button.setStyleSheet("QPushButton {border-radius: 30px; background-color: red;}")
+
             self.selected_nodes.append(button)
+
         else:
             button.change_styling()
 
             self.selected_nodes.remove(button)
-        self.update_parent_info_label()
 
-    def update_parent_info_label(self):
-        if self.parent().info_label:
-            selected_text = ', '.join(node.name for node in self.selected_nodes)
-            self.parent().info_label.setText(selected_text if selected_text else "∅")
+        if len(self.selected_nodes) == 2:
+            time.sleep(0.2)
+
+            self.update_pairs_text_edit()
+            self.selected_nodes[0].change_styling()
+            self.selected_nodes[-1].change_styling()
+            self.selected_nodes.clear()
+
+    def update_pairs_text_edit(self):
+        if self.parent().plain_text_edit:
+            selected_text = f'({self.selected_nodes[0].name};{self.selected_nodes[-1].name}), '
+            self.parent().plain_text_edit.appendPlainText(selected_text if selected_text else "∅")
+
+            cursor = self.parent().plain_text_edit.textCursor()
+            cursor.setPosition(len(self.parent().plain_text_edit.toPlainText()))
+            self.parent().plain_text_edit.setTextCursor(cursor)
 
 
-class GraphWindow(QDialog):
-    saveSignal = pyqtSignal(str)
+class GraphPairWindow(QDialog):
+    saveSignal = pyqtSignal(set)
 
     def __init__(self, variant):
         super().__init__()
@@ -96,10 +111,9 @@ class GraphWindow(QDialog):
             node.move(*pos)
             self.graph_area.node_positions[name] = (pos[0] + 30, pos[1] + 30)
 
-        self.info_label = QLabel("∅", self)
-        self.info_label.setGeometry(50, 560, 500, 40)
-        self.info_label.setFont(QFont("Century Gothic", 16))
-        self.info_label.setAlignment(Qt.AlignCenter)
+        self.plain_text_edit = QPlainTextEdit(self)
+        self.plain_text_edit.setGeometry(50, 520, 500, 80)
+        self.plain_text_edit.textChanged.connect(self.filter_text)
 
         reset_button = QPushButton("Сбросить", self)
         reset_button.setGeometry(50, 620, 150, 40)
@@ -118,15 +132,29 @@ class GraphWindow(QDialog):
         for node in self.graph_area.selected_nodes:
             node.change_styling()
         self.graph_area.selected_nodes.clear()
-        self.info_label.setText("∅")
 
     def save_graph(self):
-        selected_node_names = [node.name for node in self.graph_area.selected_nodes]
-        if selected_node_names:
-            self.saveSignal.emit(', '.join(selected_node_names))
-        else:
-            self.saveSignal.emit('∅')
+        selected_pairs = self.plain_text_edit.toPlainText().split(', ')
+        selected_pairs = {(pair[1], pair[3]) for pair in selected_pairs[:-1]}
+
+        self.saveSignal.emit(selected_pairs)
 
         self.close()
         self.reset_graph()
+
+    def filter_text(self):
+        text = self.plain_text_edit.toPlainText()
+
+        filtered_text = ''.join(filter(lambda x: x in '(), ABCDEFGHI;', text))
+
+        if text != filtered_text:
+            cursor_position = self.plain_text_edit.textCursor().position()
+
+            self.plain_text_edit.setPlainText(filtered_text)
+
+            cursor = self.plain_text_edit.textCursor()
+            cursor.setPosition(min(cursor_position, len(filtered_text)))
+            self.plain_text_edit.setTextCursor(cursor)
+
+
 

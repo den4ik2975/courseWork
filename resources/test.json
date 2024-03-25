@@ -2,7 +2,7 @@
   "data": {
     "A": {
       "ups": [],
-      "downs": ["B"]
+      "downs": ["B", "E"]
     },
     "B": {
       "ups": ["A"],
@@ -17,7 +17,7 @@
       "downs": ["G"]
     },
     "E": {
-      "ups": ["A"],
+      "ups": ["A", "C"],
       "downs": []
     },
     "F": {
@@ -44,7 +44,7 @@
         "maxes": "ADC",
         "smallest": "Z",
         "largest": "Z",
-        "order": "GBA",
-        "revorder": "Z"
+        "section": "Z",
+        "revsection": "GBA"
   }
 }
