@@ -80,7 +80,7 @@ class MainWindow(QMainWindow):
         self.graph_window.exec()
 
     def end_choice(self):
-        if sum(self.answer_counter.values()) == 8:
+        if sum(self.answer_counter.values()) == 0:
             self.successSignal.emit('')
 
     def pair_choice(self):

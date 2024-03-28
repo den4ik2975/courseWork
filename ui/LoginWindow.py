@@ -40,19 +40,23 @@ class LoginWindow(QMainWindow):
 
     @pyqtSlot(str)
     def failure_handler(self, data):
-        self.failure_window.exec()
+        self.failure_window.exec_()
 
     @pyqtSlot(str)
     def success_handler(self, data):
         end_time = datetime.now()
         delta = end_time - self.start_time
 
-        stringified_end = end_time.strftime('%m.%d %H:%M:%S')
+        stringified_start = self.start_time.strftime('%m.%d %H:%M:%S')
         stringified_delta = str(delta)
 
-        self.success_window.fioLabel.setText(self.fio)
-        self.success_window.groupLabel.setText(self.group)
-        self.success_window.endLabel.setText(stringified_end)
+        if self.fio != '':
+            self.success_window.fioLabel.setText(self.fio)
+
+        if self.group != '':
+            self.success_window.groupLabel.setText(self.group)
+
+        self.success_window.endLabel.setText(stringified_start)
         self.success_window.timeLabel.setText(stringified_delta)
 
         self.success_window.exec()

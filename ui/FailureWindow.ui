@@ -7,57 +7,134 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>560</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>560</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>560</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Century Gothic</family>
+    <pointsize>12</pointsize>
+    <weight>75</weight>
+    <bold>true</bold>
+   </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>50</y>
-      <width>731</width>
-      <height>291</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>100</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>ПРОВАЛ!!</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="exitButton">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>400</y>
-      <width>321</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Выйти</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="retryButton">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>400</y>
-      <width>341</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Попробовать еще раз</string>
-    </property>
-   </widget>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../resources/temp/icon.png</normaloff>../resources/temp/icon.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: white; color: white;</string>
+  </property>
+  <widget class="QPushButton" name="retryButton">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>340</y>
+     <width>410</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Century Gothic</family>
+     <pointsize>22</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	background-color: #6e9673;
+	color: white;
+	border-radius: 6px;
+	border: 2px solid #6e9673;
+}
+
+QPushButton:hover {
+	background-color: #648768;
+	color: white;
+}</string>
+   </property>
+   <property name="text">
+    <string>Попробовать еще раз</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="exitButton">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>340</y>
+     <width>200</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Century Gothic</family>
+     <pointsize>22</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	background-color: #bb8a52;
+	color: white;
+	border-radius: 6px;
+	border: 2px solid #bb8a52;
+}
+
+QPushButton:hover {
+	background-color: #A47A4C;
+	color: white;
+}</string>
+   </property>
+   <property name="text">
+    <string>Выйти</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>90</y>
+     <width>621</width>
+     <height>241</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Century Gothic</family>
+     <pointsize>80</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #ffb804;
+border-radius: 10px;</string>
+   </property>
+   <property name="text">
+    <string>ПРОВАЛ!!</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
  </widget>
  <resources/>

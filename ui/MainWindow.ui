@@ -10,6 +10,18 @@
     <height>700</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>1125</width>
+    <height>700</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1125</width>
+    <height>700</height>
+   </size>
+  </property>
   <property name="font">
    <font>
     <family>Century Gothic</family>
@@ -18,7 +30,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Диаграммы Хассе</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../resources/temp/icon.png</normaloff>../resources/temp/icon.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: white;
