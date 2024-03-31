@@ -28,11 +28,22 @@ class GraphNode(QPushButton):
 
     def change_styling(self):
         if self.endpoint:
-            self.setStyleSheet("QPushButton {border-radius: 30px;background-color: "
-                               "white;} QPushButton:hover {background-color: red}")
+            self.setStyleSheet("QPushButton {border-radius: 30px;"
+                               "background-color: #FFF9E8;"
+                               "border-radius: 30px; "
+                               "font-weight: bold;"
+                               "border: 2px solid #ffb804;} "
+                               "QPushButton:hover {background-color: #6e9673; "
+                               "color: white;"
+                               "border: None;}")
         else:
-            self.setStyleSheet("QPushButton {border-radius: 30px;background-color: "
-                               "gray;} QPushButton:hover {background-color: red}")
+            self.setStyleSheet("QPushButton {border-radius: 30px;"
+                               "background-color: #E2EFE4;"
+                               "border-radius: 30px; "
+                               "font-weight: bold;"
+                               "border: 2px solid #6e9673;} "
+                               "QPushButton:hover {background-color: #6e9673; "
+                               "color: white;}")
 
 
 class GraphArea(QWidget):
@@ -59,8 +70,7 @@ class GraphArea(QWidget):
 
     def node_clicked(self, button):
         if button not in self.selected_nodes:
-            button.setStyleSheet("QPushButton {border-radius: 30px; background-color: red;}")
-
+            button.setStyleSheet("QPushButton {border-radius: 30px; font-weight: bold; background-color: #6e9673;}")
             self.selected_nodes.append(button)
 
         else:
@@ -96,15 +106,19 @@ class GraphPairWindow(QDialog):
         self.variant = variant
         self.action = ''
         self.initUI()
+        self.setFont(QFont("Century Gothic", 20))
+        self.setStyleSheet("background-color: white; "
+                           "QLabel { font-weight: bold; }"
+                           "QPushButton { font-weight: bold; }")
 
     def initUI(self):
-        self.setWindowTitle("Graph Visualization")
+        self.setWindowTitle("Выберите элементы")
         self.graph_area = GraphArea(self.variant, self)
         self.graph_area.setGeometry(50, 50, 500, 500)
         self.graph_area.setStyleSheet("background-color: white;")
 
-        positions = [(225, 25), (150, 115), (300, 115), (75, 205), (225, 205), (375, 205), (150, 295), (300, 295),
-                     (225, 385)]
+        positions = [(225, 50), (150, 140), (300, 140), (75, 230), (225, 230), (375, 230), (150, 320), (300, 320),
+                     (225, 410)]
         names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
         for pos, name in zip(positions, names):
             node = GraphNode(name, self.graph_area)
@@ -112,21 +126,48 @@ class GraphPairWindow(QDialog):
             self.graph_area.node_positions[name] = (pos[0] + 30, pos[1] + 30)
 
         self.plain_text_edit = QPlainTextEdit(self)
-        self.plain_text_edit.setGeometry(50, 520, 500, 80)
+        self.plain_text_edit.setGeometry(40, 540, 520, 50)
         self.plain_text_edit.textChanged.connect(self.filter_text)
 
+        self.plain_text_edit.setStyleSheet("color: #0b392c;"
+                                           "border-radius: 10px;"
+                                           "background-color: #f6f8f7;"
+                                           "padding-left: 10px;"
+                                           "padding-top: 10px;")
+
         reset_button = QPushButton("Сбросить", self)
-        reset_button.setGeometry(50, 620, 150, 40)
+        reset_button.setGeometry(40, 600, 200, 60)
+        reset_button.setFont(QFont("Century Gothic", 20))
         reset_button.clicked.connect(self.reset_graph)
 
+        reset_button.setStyleSheet("QPushButton {background-color: #bb8a52; "
+                                   "color: white; "
+                                   "border-radius: 6px; "
+                                   "text-align: center;"
+                                   "font-weight: bold;} "
+                                   "QPushButton:hover {background-color: #A47A4C; "
+                                   "color: white;}")
+
         save_button = QPushButton("Сохранить", self)
-        save_button.setGeometry(400, 620, 150, 40)
+        save_button.setGeometry(360, 600, 200, 60)
+        save_button.setFont(QFont("Century Gothic", 20))
         save_button.clicked.connect(self.save_graph)
 
+        save_button.setStyleSheet("QPushButton {background-color: #ffb804;"
+                                  "border-radius: 10px;"
+                                  "color: white;"
+                                  "font-weight: bold;}"
+                                  "QPushButton:hover {background-color: #f3a600}")
+
         self.task_label = QLabel('', self)
-        self.task_label.setGeometry(50, 10, 500, 40)
-        self.task_label.setFont(QFont("Century Gothic", 16))
+        self.task_label.setGeometry(40, 20, 520, 60)
+        self.task_label.setFont(QFont("Century Gothic", 20))
         self.task_label.setAlignment(Qt.AlignCenter)
+
+        self.task_label.setStyleSheet("background-color: #6e9673; "
+                                      "border-radius: 10px;"
+                                      "font-weight: bold;"
+                                      "color: white;")
 
     def reset_graph(self):
         for node in self.graph_area.selected_nodes:

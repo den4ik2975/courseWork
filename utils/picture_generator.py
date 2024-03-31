@@ -8,8 +8,8 @@ class ImageGenerator:
         self.end = end
         self.img_size = (660, 660)
         self.node_radius = 40
-        self.node_color = 'gray'
-        self.font_path = "arial.ttf"
+        self.node_color = '#E2EFE4'
+        self.font_path = "arial"
         self.font_size = 40
         self.h_spacing = 95
         self.v_spacing = 120
@@ -32,7 +32,7 @@ class ImageGenerator:
     def generate_image(self):
         font = ImageFont.truetype(self.font_path, self.font_size)
 
-        img = Image.new('RGB', self.img_size, '#ebebeb')
+        img = Image.new('RGB', self.img_size, '#f6f8f7')
         draw = ImageDraw.Draw(img)
 
         for node, connections in self.adjacency_list.items():
@@ -44,16 +44,15 @@ class ImageGenerator:
                     connection_pos = self.positions[connection_index]
                     draw.line([node_pos, connection_pos], fill='black', width=3)
 
-
         for i, pos in enumerate(self.positions):
             top_left = (pos[0] - self.node_radius, pos[1] - self.node_radius)
             bottom_right = (pos[0] + self.node_radius, pos[1] + self.node_radius)
 
             if self.names[i] == self.start or self.names[i] == self.end:
-                draw.ellipse([top_left, bottom_right], fill='white', outline=None)
+                draw.ellipse([top_left, bottom_right], fill='#FFF9E8', outline="#ffb804", width=3)
 
             else:
-                draw.ellipse([top_left, bottom_right], fill=self.node_color, outline=None)
+                draw.ellipse([top_left, bottom_right], fill=self.node_color, outline="#6e9673", width=3)
 
             text_size = font.getbbox(self.names[i])
             dx, dy = text_size[2] - text_size[0], text_size[3] - text_size[1]

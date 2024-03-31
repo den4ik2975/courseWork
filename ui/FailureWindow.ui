@@ -130,7 +130,7 @@ QPushButton:hover {
 border-radius: 10px;</string>
    </property>
    <property name="text">
-    <string>ПРОВАЛ!!</string>
+    <string>НЕВЕРНО!!</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
