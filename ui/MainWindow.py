@@ -5,6 +5,7 @@ from PyQt5.QtGui import QPixmap, QImage
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtCore import pyqtSlot, pyqtSignal
 
+from ui.HelpWindow import HelpWindow
 from ui.GraphWindow import GraphWindow
 from ui.GraphPairWindow import GraphPairWindow
 from database import crud
@@ -23,6 +24,7 @@ class MainWindow(QMainWindow):
         self.picture_generator = ImageGenerator(hasse_parser(self.variant.connections), self.variant.start, self.variant.end)
         self.graph_window = GraphWindow(self.variant)
         self.graph_pair_window = GraphPairWindow(self.variant)
+        self.help_window = HelpWindow()
 
         uic.loadUi("ui/MainWindow.ui", self)
         self.current_action = ''
@@ -30,14 +32,16 @@ class MainWindow(QMainWindow):
 
         self.graph_window.saveSignal.connect(self.handle_signal)
         self.graph_pair_window.saveSignal.connect(self.handle_pair_signal)
+        self.help_window.closeHelpSignal.connect(self.handle_help_signal)
 
         for key, value in self.__dict__.items():
-            if 'Button' in key and 'end' not in key and 'pair' not in key:
+            if 'Button' in key and 'end' not in key and 'pair' not in key and 'help' not in key:
                 name = key[:-6]
                 getattr(self, key).clicked.connect(self.click_handler)
                 self.current_action = name
         self.endButton.clicked.connect(self.end_choice)
         self.pairButton.clicked.connect(self.pair_choice)
+        self.helpButton.clicked.connect(self.help_choice)
 
         self.picture_generator.generate_image().save('resources/temp/graph.png')
         self.image.setPixmap(QPixmap('resources/temp/graph.png'))
@@ -73,6 +77,10 @@ class MainWindow(QMainWindow):
 
         self.answer_flag_handler(answer_flag)
 
+    @pyqtSlot(str)
+    def handle_help_signal(self, data):
+        self.help_window.close()
+
     def click_handler(self):
         sender = self.sender().objectName()[:-6]
         self.current_action = sender
@@ -88,6 +96,10 @@ class MainWindow(QMainWindow):
         self.current_action = sender
         self.graph_pair_window.task_label.setText(humanizer(sender, self.variant.start, self.variant.end))
         self.graph_pair_window.exec()
+
+    def help_choice(self):
+        self.help_window.exec()
+
 
     def answer_flag_handler(self, flag):
         if flag is False:

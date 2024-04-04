@@ -57,8 +57,8 @@ border-radius: 10px;</string>
     <rect>
      <x>10</x>
      <y>80</y>
-     <width>300</width>
-     <height>60</height>
+     <width>581</width>
+     <height>141</height>
     </rect>
    </property>
    <property name="font">
@@ -75,71 +75,16 @@ color: #6e9673;
 border-radius: 10px;</string>
    </property>
    <property name="text">
-    <string>Развлекайся</string>
+    <string>Для работы с программой &quot;Диаграммы Хассе&quot; нажмите на кнопку того пункта, который хотите выполнить. Откроется дополнительное окно с диаграммой. Выберите ответ, нажимая на точки диаграммы и нажмите кнопку &quot;Сохранить&quot;</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
-  </widget>
-  <widget class="QLabel" name="label_8">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>150</y>
-     <width>400</width>
-     <height>60</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Century Gothic</family>
-     <pointsize>10</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: #E2EFE4;
-color: #6e9673;
-border-radius: 10px;</string>
-   </property>
-   <property name="text">
-    <string>Можешь эти облачка копировать и жить жизнь</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="label_9">
-   <property name="geometry">
-    <rect>
-     <x>310</x>
-     <y>220</y>
-     <width>300</width>
-     <height>60</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Century Gothic</family>
-     <pointsize>10</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: #E2EFE4;
-color: #6e9673;
-border-radius: 10px;</string>
-   </property>
-   <property name="text">
-    <string>Йоу</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="startButton">
+  <widget class="QPushButton" name="closeButton">
    <property name="geometry">
     <rect>
      <x>10</x>

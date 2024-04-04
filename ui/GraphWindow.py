@@ -13,6 +13,7 @@ class GraphNode(QPushButton):
         self.setFixedSize(60, 60)  # Increase the size of the buttons
         self.setFont(QFont("Century Gothic", 16))
 
+
         if parent.start_node == self.name or parent.end_node == self.name:
             self.endpoint = True
 
@@ -92,12 +93,16 @@ class GraphWindow(QDialog):
         self.variant = variant
         self.action = ''
         self.initUI()
+        self.setWindowFlag(Qt.WindowCloseButtonHint, False)
+        self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+
+
+    def initUI(self):
         self.setFont(QFont("Century Gothic", 20))
         self.setStyleSheet("background-color: white; "
                            "QLabel { font-weight: bold; }"
                            "QPushButton { font-weight: bold; }")
-
-    def initUI(self):
+        
         self.setWindowTitle("Выберите элементы")
         self.graph_area = GraphArea(self.variant, self)
         self.graph_area.setGeometry(50, 50, 500, 500)
