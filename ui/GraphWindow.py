@@ -133,7 +133,7 @@ class GraphWindow(QDialog):
                                    "QPushButton:hover {background-color: #A47A4C; "
                                    "color: white;}")
 
-        save_button = QPushButton("Сохранить", self)
+        save_button = QPushButton("Завершить", self)
         save_button.setGeometry(360, 600, 200, 60)
         save_button.setFont(QFont("Century Gothic", 20))
         save_button.clicked.connect(self.save_graph)
