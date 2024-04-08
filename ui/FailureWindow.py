@@ -14,7 +14,7 @@ class FailureWindow(QDialog):
         self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
 
         self.exitButton.clicked.connect(self.exit_handler)
-        #self.retryButton.clicked.connect(self.retry_handler)
+        # self.retryButton.clicked.connect(self.retry_handler)
 
     def exit_handler(self):
         self.exitSignal.emit('O')
