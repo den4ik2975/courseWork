@@ -34,7 +34,7 @@ def humanizer(act, start, end):
         'largest': 'Выберите наибольший элемент',
         'smallest': 'Выберите наименьший элемент',
         'section': f'Выберите отрезок [{start}; {end}]',
-        'revsection': f'Выберите отрезок [{start}; {end}]',
+        'revsection': f'Выберите отрезок [{end}; {start}]',
         'order': f'Составьте линейный порядок',
         'pair': f'Выберите все пары'
     }

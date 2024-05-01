@@ -2,10 +2,10 @@
   "data": {
     "A": {
       "ups": [],
-      "downs": ["B", "E"]
+      "downs": []
     },
     "B": {
-      "ups": ["A"],
+      "ups": [],
       "downs": ["G"]
     },
     "C": {
@@ -17,8 +17,8 @@
       "downs": ["G"]
     },
     "E": {
-      "ups": ["A", "C"],
-      "downs": []
+      "ups": ["C"],
+      "downs": ["H"]
     },
     "F": {
       "ups": ["C"],
@@ -29,7 +29,7 @@
       "downs": ["I"]
     },
     "H": {
-      "ups": ["F"],
+      "ups": ["E", "F"],
       "downs": ["I"]
     },
     "I": {
@@ -37,14 +37,14 @@
       "downs": []
     }
   },
-  "start": "A",
-  "end": "G",
+  "start": "C",
+  "end": "I",
   "answers": {
-    "mins": "EI",
-        "maxes": "ADC",
-        "smallest": "Z",
-        "largest": "Z",
-        "section": "Z",
-        "revsection": "GBA"
+    "mins": "AI",
+    "maxes": "ABCD",
+    "smallest": "Z",
+    "largest": "Z",
+    "section": "Z",
+    "revsection": "IHEFC"
   }
 }
