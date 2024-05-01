@@ -100,7 +100,6 @@ class MainWindow(QMainWindow):
     def help_choice(self):
         self.help_window.exec()
 
-
     def answer_flag_handler(self, flag):
         if flag is False:
             self.graph_window.close()
