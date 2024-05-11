@@ -1,13 +1,13 @@
 from random import randint
 
 from sqlalchemy import select
-from database.tables import Variant
-from database.base import session
+
+from src.database.base import session
+from src.database.tables import Variant
 
 
 def get_random_variant() -> Variant:
-    #chosenVariant = randint(0, 19)
-    chosen_variant = 1  # DEV
+    chosen_variant = randint(0, 19)
 
     stmt = select(Variant).where(Variant.id == chosen_variant)
 
@@ -28,4 +28,3 @@ def add_new_variant(connections, start, end, answers) -> None:  # DEV!!!
 
         session.add(var)
         session.commit()
-

@@ -1,10 +1,8 @@
-import time
-
-from PyQt5.QtWidgets import QPushButton, QWidget, QLabel, QDialog, QPlainTextEdit
 from PyQt5.QtCore import Qt, QPoint, pyqtSignal
-from PyQt5.QtGui import QPainter, QPen, QFont
-from utils.helper_functions import hasse_parser, humanizer
-from database import crud
+from PyQt5.QtGui import QPainter, QPen, QFont, QIcon
+from PyQt5.QtWidgets import QPushButton, QWidget, QLabel, QDialog
+
+from src.utils.helper_functions import hasse_parser
 
 
 class GraphNode(QPushButton):
@@ -72,32 +70,20 @@ class GraphArea(QWidget):
         if button not in self.selected_nodes:
             button.setStyleSheet("QPushButton {border-radius: 30px; font-weight: bold; background-color: #6e9673;}")
             self.selected_nodes.append(button)
-
         else:
             button.change_styling()
 
             self.selected_nodes.remove(button)
+        self.update_parent_info_label()
 
-        if len(self.selected_nodes) == 2:
-            time.sleep(0.2)
-
-            self.update_pairs_text_edit()
-            self.selected_nodes[0].change_styling()
-            self.selected_nodes[-1].change_styling()
-            self.selected_nodes.clear()
-
-    def update_pairs_text_edit(self):
-        if self.parent().plain_text_edit:
-            selected_text = f'({self.selected_nodes[0].name};{self.selected_nodes[-1].name}), '
-            self.parent().plain_text_edit.appendPlainText(selected_text if selected_text else "∅")
-
-            cursor = self.parent().plain_text_edit.textCursor()
-            cursor.setPosition(len(self.parent().plain_text_edit.toPlainText()))
-            self.parent().plain_text_edit.setTextCursor(cursor)
+    def update_parent_info_label(self):
+        if self.parent().info_label:
+            selected_text = ', '.join(node.name for node in self.selected_nodes)
+            self.parent().info_label.setText(selected_text if selected_text else "∅")
 
 
-class GraphPairWindow(QDialog):
-    saveSignal = pyqtSignal(set)
+class GraphWindow(QDialog):
+    saveSignal = pyqtSignal(str)
 
     def __init__(self, variant):
         super().__init__()
@@ -106,34 +92,37 @@ class GraphPairWindow(QDialog):
         self.variant = variant
         self.action = ''
         self.initUI()
+        self.setWindowFlag(Qt.WindowCloseButtonHint, False)
+        self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+
+    def initUI(self):
         self.setFont(QFont("Century Gothic", 20))
         self.setStyleSheet("background-color: white; "
                            "QLabel { font-weight: bold; }"
                            "QPushButton { font-weight: bold; }")
 
-    def initUI(self):
+        self.setWindowIcon(QIcon('../resources/icon.png'))
         self.setWindowTitle("Выберите элементы")
         self.graph_area = GraphArea(self.variant, self)
         self.graph_area.setGeometry(50, 50, 500, 500)
-        self.graph_area.setStyleSheet("background-color: white;")
 
-        positions = [(225, 50), (150, 140), (300, 140), (75, 230), (225, 230), (375, 230), (150, 320), (300, 320),
-                     (225, 410)]
+        positions = [(225, 55), (150, 145), (300, 145), (75, 235), (225, 235), (375, 235), (150, 325), (300, 325),
+                     (225, 415)]
         names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
         for pos, name in zip(positions, names):
             node = GraphNode(name, self.graph_area)
             node.move(*pos)
             self.graph_area.node_positions[name] = (pos[0] + 30, pos[1] + 30)
 
-        self.plain_text_edit = QPlainTextEdit(self)
-        self.plain_text_edit.setGeometry(40, 540, 520, 50)
-        self.plain_text_edit.textChanged.connect(self.filter_text)
-
-        self.plain_text_edit.setStyleSheet("color: #0b392c;"
-                                           "border-radius: 10px;"
-                                           "background-color: #f6f8f7;"
-                                           "padding-left: 10px;"
-                                           "padding-top: 10px;")
+        self.info_label = QLabel("∅", self)
+        self.info_label.setGeometry(40, 550, 520, 40)
+        self.info_label.setFont(QFont("Century Gothic", 18))
+        self.info_label.setAlignment(Qt.AlignCenter)
+        self.info_label.setStyleSheet("background-color: #f6f8f7; "
+                                      "font-weight: bold;"
+                                      "color: #0b392c; "
+                                      "padding-left: 10px; "
+                                      "border-radius: 10px;")
 
         reset_button = QPushButton("Сбросить", self)
         reset_button.setGeometry(40, 600, 200, 60)
@@ -163,7 +152,6 @@ class GraphPairWindow(QDialog):
         self.task_label.setGeometry(40, 20, 520, 60)
         self.task_label.setFont(QFont("Century Gothic", 20))
         self.task_label.setAlignment(Qt.AlignCenter)
-
         self.task_label.setStyleSheet("background-color: #6e9673; "
                                       "border-radius: 10px;"
                                       "font-weight: bold;"
@@ -173,29 +161,14 @@ class GraphPairWindow(QDialog):
         for node in self.graph_area.selected_nodes:
             node.change_styling()
         self.graph_area.selected_nodes.clear()
+        self.info_label.setText("∅")
 
     def save_graph(self):
-        selected_pairs = self.plain_text_edit.toPlainText().split(', ')
-        selected_pairs = {(pair[1], pair[3]) for pair in selected_pairs[:-1]}
-
-        self.saveSignal.emit(selected_pairs)
+        selected_node_names = [node.name for node in self.graph_area.selected_nodes]
+        if selected_node_names:
+            self.saveSignal.emit(', '.join(selected_node_names))
+        else:
+            self.saveSignal.emit('∅')
 
         self.close()
         self.reset_graph()
-
-    def filter_text(self):
-        text = self.plain_text_edit.toPlainText()
-
-        filtered_text = ''.join(filter(lambda x: x in '(), ABCDEFGHI;', text))
-
-        if text != filtered_text:
-            cursor_position = self.plain_text_edit.textCursor().position()
-
-            self.plain_text_edit.setPlainText(filtered_text)
-
-            cursor = self.plain_text_edit.textCursor()
-            cursor.setPosition(min(cursor_position, len(filtered_text)))
-            self.plain_text_edit.setTextCursor(cursor)
-
-
-

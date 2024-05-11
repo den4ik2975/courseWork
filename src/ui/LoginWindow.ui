@@ -28,15 +28,16 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Салют, Вера!</string>
+   <string>Логин</string>
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../resources/temp/icon.png</normaloff>../resources/temp/icon.png</iconset>
+    <normaloff>../resources/icon.png</normaloff>../resources/icon.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: white;
-color: white;</string>
+                color: white;
+            </string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLineEdit" name="fioLine">
@@ -58,10 +59,10 @@ color: white;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">color: #0b392c;
-border-radius: 10px;
-background-color: #f6f8f7;
-padding-left: 10px;
-</string>
+                        border-radius: 10px;
+                        background-color: #f6f8f7;
+                        padding-left: 10px;
+                    </string>
     </property>
     <property name="inputMask">
      <string/>
@@ -89,10 +90,10 @@ padding-left: 10px;
     </property>
     <property name="styleSheet">
      <string notr="true">color: #0b392c;
-border-radius: 10px;
-background-color: #f6f8f7;
-padding-left: 10px;
-</string>
+                        border-radius: 10px;
+                        background-color: #f6f8f7;
+                        padding-left: 10px;
+                    </string>
     </property>
     <property name="placeholderText">
      <string>Группа</string>
@@ -117,13 +118,14 @@ padding-left: 10px;
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	background-color: #ffb804;
-	border-radius: 10px; 
-}
+                        background-color: #ffb804;
+                        border-radius: 10px;
+                        }
 
-QPushButton:hover{
-	background-color: #f3a600;
-}</string>
+                        QPushButton:hover{
+                        background-color: #f3a600;
+                        }
+                    </string>
     </property>
     <property name="text">
      <string>Начать тест</string>
@@ -141,14 +143,15 @@ QPushButton:hover{
     <property name="font">
      <font>
       <family>Century Gothic</family>
-      <pointsize>20</pointsize>
+      <pointsize>18</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: #6e9673;
-border-radius: 10px;</string>
+                        border-radius: 10px;
+                    </string>
     </property>
     <property name="text">
      <string>Диаграммы Хассе</string>
@@ -176,14 +179,12 @@ border-radius: 10px;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: #E2EFE4;
-color: #6e9673;
-border-radius: 10px;</string>
+                        color: #6e9673;
+                        border-radius: 10px;
+                    </string>
     </property>
     <property name="text">
-     <string>Работу выполнили:
-Авраменко Д.А., Лапенко К.А.
-Научный руководитель: Нефедов В.Н.
-тг: @Dhelpra</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Работу выполнили:&lt;br/&gt;Авраменко Д.А., Лапенко К.А.&lt;br/&gt;Научный руководитель: Нефедов В.Н.&lt;br/&gt;тг: @Dhelpra&lt;/p&gt;&lt;p/&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

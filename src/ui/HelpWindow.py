@@ -1,6 +1,6 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QDialog
-from PyQt5.QtCore import pyqtSlot, pyqtSignal, Qt
+from PyQt5.QtCore import pyqtSignal, Qt
+from PyQt5.QtWidgets import QDialog
 
 
 class HelpWindow(QDialog):
@@ -8,7 +8,7 @@ class HelpWindow(QDialog):
 
     def __init__(self):
         super().__init__()
-        uic.loadUi("ui/HelpWindow.ui", self)
+        uic.loadUi("src/ui/HelpWindow.ui", self)
         self.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
 

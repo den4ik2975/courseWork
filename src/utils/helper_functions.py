@@ -1,30 +1,21 @@
-import copy
-
-
 def hasse_parser(diag: dict) -> dict[str, list[list, list]]:
     graph = {}
 
     for node, connections in diag.items():
+        if graph.get(node, False) is False:
+            graph[node] = []
+
         for down in connections["downs"]:
-            if graph.get(node, False) is False:
-                graph[node] = []
             graph[node].append(down)
 
         for up in connections["ups"]:
-            if graph.get(node, False) is False:
-                graph[node] = []
             graph[node].append(up)
 
     return graph
 
 
 def answers_parser(answer, action):
-
-    if action in ['maxes', 'mins', 'largest', 'smallest']:
-        return [set(answer[action])]
-
-    elif action in ['section', 'revsection']:
-        return [set(i) for i in answer[action].split('|')]
+    return [set(answer[action])]
 
 
 def humanizer(act, start, end):
@@ -34,7 +25,7 @@ def humanizer(act, start, end):
         'largest': 'Выберите наибольший элемент',
         'smallest': 'Выберите наименьший элемент',
         'section': f'Выберите отрезок [{start}; {end}]',
-        'revsection': f'Выберите отрезок [{end}; {start}]',
+        'revsection': f'Выберите отрезок [{start}; {end}]',
         'order': f'Составьте линейный порядок',
         'pair': f'Выберите все пары'
     }
@@ -43,7 +34,6 @@ def humanizer(act, start, end):
 
 
 def linear_checker(variant, answer):
-
     if len(answer) != 9:
         return False
 
@@ -82,5 +72,3 @@ def pair_checker(variant):
             ans = step_in(variant, [], node, ans, checked)
 
     return ans
-
-

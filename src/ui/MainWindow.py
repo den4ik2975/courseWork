@@ -1,16 +1,16 @@
 import copy
 
 from PyQt5 import uic
-from PyQt5.QtGui import QPixmap, QImage
-from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtCore import pyqtSlot, pyqtSignal
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QMainWindow
 
-from ui.HelpWindow import HelpWindow
-from ui.GraphWindow import GraphWindow
-from ui.GraphPairWindow import GraphPairWindow
-from database import crud
-from utils.helper_functions import answers_parser, hasse_parser, humanizer, linear_checker, pair_checker
-from utils.picture_generator import ImageGenerator
+from src.database import crud
+from src.ui.GraphPairWindow import GraphPairWindow
+from src.ui.GraphWindow import GraphWindow
+from src.ui.HelpWindow import HelpWindow
+from src.utils.helper_functions import answers_parser, hasse_parser, humanizer, linear_checker, pair_checker
+from src.utils.picture_generator import ImageGenerator
 
 
 class MainWindow(QMainWindow):
@@ -21,14 +21,16 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.variant = crud.get_random_variant()
-        self.picture_generator = ImageGenerator(hasse_parser(self.variant.connections), self.variant.start, self.variant.end)
+        self.picture_generator = ImageGenerator(hasse_parser(self.variant.connections), self.variant.start,
+                                                self.variant.end)
         self.graph_window = GraphWindow(self.variant)
         self.graph_pair_window = GraphPairWindow(self.variant)
         self.help_window = HelpWindow()
 
-        uic.loadUi("ui/MainWindow.ui", self)
+        uic.loadUi("src/ui/MainWindow.ui", self)
         self.current_action = ''
-        self.answer_counter = {'maxes': 0, 'mins': 0, 'largest': 0, 'smallest': 0, 'section': 0, 'revsection': 0, 'linear': 0, 'pair': 0}
+        self.answer_counter = {'maxes': 0, 'mins': 0, 'largest': 0, 'smallest': 0, 'section': 0, 'revsection': 0,
+                               'linear': 0, 'pair': 0}
 
         self.graph_window.saveSignal.connect(self.handle_signal)
         self.graph_pair_window.saveSignal.connect(self.handle_pair_signal)
@@ -43,8 +45,8 @@ class MainWindow(QMainWindow):
         self.pairButton.clicked.connect(self.pair_choice)
         self.helpButton.clicked.connect(self.help_choice)
 
-        self.picture_generator.generate_image().save('resources/temp/graph.png')
-        self.image.setPixmap(QPixmap('resources/temp/graph.png'))
+        self.picture_generator.generate_image().save('src/resources/temp/graph.png')
+        self.image.setPixmap(QPixmap('src/resources/temp/graph.png'))
 
         self.sectionButton.setText(f'[{self.variant.start}; {self.variant.end}]')
         self.revsectionButton.setText(f'[{self.variant.end}; {self.variant.start}]')
@@ -88,7 +90,7 @@ class MainWindow(QMainWindow):
         self.graph_window.exec()
 
     def end_choice(self):
-        if sum(self.answer_counter.values()) == 0:
+        if sum(self.answer_counter.values()) == 8:
             self.successSignal.emit('')
 
     def pair_choice(self):
@@ -111,5 +113,3 @@ class MainWindow(QMainWindow):
             getattr(self, self.current_action).setStyleSheet(
                 "QLabel { background-color: #67E667; color: #0b392c; padding-left: 10px; border-radius: 6px;}")
             self.answer_counter[self.current_action] = 1
-
-

@@ -1,3 +1,5 @@
+from sys import platform
+
 from PIL import Image, ImageDraw, ImageFont
 
 
@@ -10,6 +12,10 @@ class ImageGenerator:
         self.node_radius = 40
         self.node_color = '#E2EFE4'
         self.font_path = "arial"
+
+        if platform == "linux" or platform == "linux2" or platform == "darwin":
+            self.font_path = "Arial"
+
         self.font_size = 40
         self.h_spacing = 95
         self.v_spacing = 120
@@ -20,10 +26,13 @@ class ImageGenerator:
         central_x, central_y = self.img_size[0] // 2, self.img_size[1] // 2
         positions = [
             (central_x, central_y - 2 * self.v_spacing),  # Line 1
-            (central_x - self.h_spacing, central_y - self.v_spacing), (central_x + self.h_spacing, central_y - self.v_spacing),  # Line 2
-            (central_x - 2 * self.h_spacing, central_y), (central_x, central_y), (central_x + 2 * self.h_spacing, central_y),
+            (central_x - self.h_spacing, central_y - self.v_spacing),
+            (central_x + self.h_spacing, central_y - self.v_spacing),  # Line 2
+            (central_x - 2 * self.h_spacing, central_y), (central_x, central_y),
+            (central_x + 2 * self.h_spacing, central_y),
             # Line 3
-            (central_x - self.h_spacing, central_y + self.v_spacing), (central_x + self.h_spacing, central_y + self.v_spacing),  # Line 4
+            (central_x - self.h_spacing, central_y + self.v_spacing),
+            (central_x + self.h_spacing, central_y + self.v_spacing),  # Line 4
             (central_x, central_y + 2 * self.v_spacing)  # Line 5
         ]
 

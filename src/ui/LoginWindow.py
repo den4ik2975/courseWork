@@ -1,12 +1,12 @@
 from datetime import datetime
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtWidgets import QMainWindow
 
-from ui.MainWindow import MainWindow
-from ui.SuccessWindow import SuccessWindow
-from ui.FailureWindow import FailureWindow
+from src.ui.FailureWindow import FailureWindow
+from src.ui.MainWindow import MainWindow
+from src.ui.SuccessWindow import SuccessWindow
 
 
 class LoginWindow(QMainWindow):
@@ -15,7 +15,7 @@ class LoginWindow(QMainWindow):
         self.main_window = MainWindow()
         self.success_window = SuccessWindow()
         self.failure_window = FailureWindow()
-        uic.loadUi("ui/LoginWindow.ui", self)
+        uic.loadUi("src/ui/LoginWindow.ui", self)
 
         self.fio = ''
         self.group = ''
@@ -74,11 +74,8 @@ class LoginWindow(QMainWindow):
         self.failure_window.close()
 
         self.main_window = MainWindow()
-        uic.loadUi("ui/LoginWindow.ui", self)
+        uic.loadUi("src/ui/LoginWindow.ui", self)
         self.main_window.failureSignal.connect(self.failure_handler)
         self.main_window.successSignal.connect(self.success_handler)
 
         self.main_window.show()
-
-
-

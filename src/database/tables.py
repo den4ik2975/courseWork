@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, JSON
-from database.base import Base
+
+from src.database.base import Base
 
 
 class Variant(Base):
